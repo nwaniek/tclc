@@ -1,0 +1,63 @@
+tclc - tiny OpenCL compiler
+
+tclc compiles OpenCL kernel files in order to help finding static problems at compile
+time rather than application run time.
+
+
+
+0 Requirements
+
+To build tclc you need the OpenCL header and libOpenCL.
+
+
+
+1 Compilation
+
+In order to compile tclc, you have to alter the Makefile to have it point to
+proper include and library folders for the OpenCL header and lib. When done,
+type make.
+At the moment, compilation is only tested against the AMD Stream SDK
+
+
+
+2 Installation
+
+There's no installation routine incorporated yet, you have to manually move the
+binary to its destined location.
+
+
+
+3 Usage
+
+tclc [options] filename...
+Options:
+  -d <arg>     Specify the device type. arg is either CPU or GPU. default is GPU
+  -l           List all available platforms, devices and device types
+  -v           Print version information
+  - h --help   Show the help message
+
+You can specify more than one cl file. The files will be compiled subsequently.
+Any compilation error will stop tclc and it will print the corresponding error
+information produced by OpenCL to stdout. 
+
+If there are no problems, tclc will return with status EXIT_SUCCESS without any
+additional output.
+
+
+
+4 Misc
+
+Behaviour and TODOs:
+  * tclc takes the first platform it finds to create a context
+  * it is not possible to pass build parameters through to opencl (this will be
+    fixed in a later release
+  * with multiple devices of different types, tclc warns that build log is not
+    available for a device that has not the specified device type...
+  * only one device type per call
+  * output is somewhat ugly
+
+
+
+5 License
+
+See LICENSE file for more details

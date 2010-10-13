@@ -1,3 +1,11 @@
+/*
+ * This file is licensed under the MIT/X Consortium License.
+ *
+ * © 2010 Nicolai Waniek
+ *
+ * See LICENSE file for further copyright and license details.
+ * See README file for a detailed description of tclc.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -82,7 +90,7 @@ get_arg_t (const char *arg)
 	}
 
 	if (!strncmp(arg, "-v", 2)) {
-		fprintf(stdout, "tclc "VERSION" (c) 2010 Nicolai Waniek\n");
+		fprintf(stdout, "tclc "VERSION" © 2010 Nicolai Waniek, see LICENSE for details\n");
 		exit(EXIT_SUCCESS);
 	}
 

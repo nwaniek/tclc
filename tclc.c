@@ -338,10 +338,7 @@ handle_compile_error (cl_int err, cl_program prog, cl_device_id *devs,
 				CL_PROGRAM_BUILD_STATUS,
 				sizeof(cl_build_status), &status, NULL);
 
-		if (err != CL_SUCCESS)
-			continue;
-
-		if (status != CL_BUILD_ERROR)
+		if (err != CL_SUCCESS || status != CL_BUILD_ERROR)
 			continue;
 
 		err = clGetProgramBuildInfo(prog, devs[i],

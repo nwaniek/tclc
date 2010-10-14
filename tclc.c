@@ -319,15 +319,17 @@ list ()
 
 
 void
-handle_compile_error (cl_int err, cl_program prog, cl_device_id *devs,
-		cl_uint ndevs)
+handle_compile_error (src_t *src, cl_int err, cl_program prog,
+		cl_device_id *devs, cl_uint ndevs)
 {
 	if (err == CL_SUCCESS)
 		return;
 
+	printf("\033[1;32mBuild Log for %s:\033[1;m\n", src->fname);
+
 	// currently just handle build program failures properly
 	if (err != CL_BUILD_PROGRAM_FAILURE)
-		die("ERROR: Unspecified build failure\n");
+		printf("ERROR: Unspecified build failure\n");
 
 	cl_build_status status;
 	char *log = NULL;
@@ -344,14 +346,14 @@ handle_compile_error (cl_int err, cl_program prog, cl_device_id *devs,
 		err = clGetProgramBuildInfo(prog, devs[i],
 				CL_PROGRAM_BUILD_LOG, 0, NULL, &len);
 		if (err != CL_SUCCESS)
-			die("ERROR: Could not retrieve build log size\n");
+			printf("ERROR: Could not retrieve build log size\n");
 
 		log = (char*)malloc(sizeof(char) * len);
 		memset(log, 0, len);
 		err = clGetProgramBuildInfo(prog, devs[i],
 				CL_PROGRAM_BUILD_LOG, len, log, NULL);
 		if (err != CL_SUCCESS)
-			die("ERROR: Could not retrieve build log\n");
+			printf("ERROR: Could not retrieve build log\n");
 
 		printf("%s\n", log);
 		free(log);
@@ -377,7 +379,7 @@ compile (src_t *src, cl_context context, cl_device_id *devs, cl_uint ndevs)
 		die("ERROR: Could not create program from source\n");
 
 	err = clBuildProgram(prog, 0, NULL, NULL, NULL, NULL);
-	handle_compile_error(err, prog, devs, ndevs);
+	handle_compile_error(src, err, prog, devs, ndevs);
 
 	clReleaseProgram(prog);
 	munmap((void*)source, src->sb.st_size);

@@ -38,7 +38,9 @@ Options:
 
 You can specify more than one cl file. The files will be compiled subsequently.
 Any compilation error will stop tclc and it will print the corresponding error
-information produced by OpenCL to stdout. 
+information produced by OpenCL to stdout!  Every build log information is
+preceded with a "Build Log for <filename>:" line, because OpenCL might use
+temporary files and not tell you the correct file name in the Build Log
 
 If there are no problems, tclc will return with status EXIT_SUCCESS without any
 additional output.
@@ -61,3 +63,9 @@ Behaviour and TODOs:
 5 License
 
 See LICENSE file for more details
+
+
+
+6 Fixes
+  * when passed multiple target files, tclc tries to compile each file,
+    regardless if one of the other files failed.

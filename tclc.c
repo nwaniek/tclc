@@ -273,7 +273,8 @@ get_device_ids (cl_platform_id pid, cl_uint *idcount)
 	cl_uint ndevs;
 	if (clGetDeviceIDs(pid, CL_DEVICE_TYPE_ALL, 0, NULL, &ndevs) != CL_SUCCESS)
 		die("ERROR: Could not determine number of devices\n");
-	*idcount = ndevs;
+	if (idcount)
+		*idcount = ndevs;
 
 	cl_device_id *devs = (cl_device_id*)malloc(sizeof(cl_device_id) * ndevs);
 	if (clGetDeviceIDs(pid, CL_DEVICE_TYPE_ALL, ndevs, devs, 0) != CL_SUCCESS)
@@ -337,8 +338,8 @@ handle_compile_error (cl_int err, cl_program prog, cl_device_id *devs,
 				CL_PROGRAM_BUILD_STATUS,
 				sizeof(cl_build_status), &status, NULL);
 
-		// if (err != CL_SUCCESS)
-		// 	printf("ERROR: Could not retrieve build status\n");
+		if (err != CL_SUCCESS)
+			continue;
 
 		if (status != CL_BUILD_ERROR)
 			continue;

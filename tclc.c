@@ -348,8 +348,8 @@ handle_compile_error (src_t *src, cl_int err, cl_program prog,
 		if (err != CL_SUCCESS)
 			printf("ERROR: Could not retrieve build log size\n");
 
-		log = (char*)malloc(sizeof(char) * len);
-		memset(log, 0, len);
+		log = (char*)malloc(sizeof(char) * (len + 1));
+		memset(log, 0, len + 1);
 		err = clGetProgramBuildInfo(prog, devs[i],
 				CL_PROGRAM_BUILD_LOG, len, log, NULL);
 		if (err != CL_SUCCESS)

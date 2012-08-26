@@ -3,6 +3,8 @@ tclc - tiny OpenCL compiler
 tclc compiles OpenCL kernel files in order to help finding static problems at compile
 time rather than application run time.
 
+WARNING: This project was stalled a long time ago.
+
 
 
 0 Requirements
